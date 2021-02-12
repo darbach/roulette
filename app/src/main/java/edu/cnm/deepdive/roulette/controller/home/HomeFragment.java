@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.roulette.ui.home;
+package edu.cnm.deepdive.roulette.controller.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
