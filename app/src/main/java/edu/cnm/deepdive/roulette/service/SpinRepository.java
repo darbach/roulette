@@ -9,6 +9,7 @@ import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class SpinRepository {
       // Update
       return spinDao
           .update(spin)
-          .map((ignored) -> spin);
+          .map((ignored) -> spin)
+          .subscribeOn(Schedulers.io());
     } else {
       // Insert
       return spinDao
@@ -48,16 +50,20 @@ public class SpinRepository {
               wagerIterator.next().setId(idIterator.next());
             }
             return spin;
-          });
+          })
+          .subscribeOn(Schedulers.io());
     }
   }
 
   public Completable delete(Spin spin) {
-    return (spin.getId() == 0)
-        ? Completable.complete() // No-op
-        : spinDao
-            .delete(spin)
-            .ignoreElement(); // Delete
+    return (
+        (spin.getId() == 0)
+            ? Completable.complete() // No-op
+            : spinDao
+                .delete(spin)
+                .ignoreElement()
+    )
+        .subscribeOn(Schedulers.io()); // Delete
   }
 
   public LiveData<List<Spin>> getAll() {

@@ -28,7 +28,7 @@ public class Wager {
 
   private Color color;
 
-  private Byte number;
+  private String value;
 
   private boolean row; // Betting on "0" and "00" at the same time.
 
@@ -63,12 +63,12 @@ public class Wager {
     this.color = color;
   }
 
-  public Byte getNumber() {
-    return number;
+  public String getValue() {
+    return value;
   }
 
-  public void setNumber(Byte number) {
-    this.number = number;
+  public void setValue(String value) {
+    this.value = value;
   }
 
   public boolean isRow() {

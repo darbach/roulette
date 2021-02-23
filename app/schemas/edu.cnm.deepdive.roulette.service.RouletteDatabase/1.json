@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "546524f24586cb22b4cbf35ca6353c41",
+    "identityHash": "eda9b42fd388b614c7bd96514cd8026f",
     "entities": [
       {
         "tableName": "Spin",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spin_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `value` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spin_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `value` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,7 +23,7 @@
           {
             "fieldPath": "value",
             "columnName": "value",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -55,7 +55,7 @@
       },
       {
         "tableName": "Wager",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wager_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `spin_id` INTEGER NOT NULL, `color` INTEGER, `number` INTEGER, `row` INTEGER NOT NULL, `amount` INTEGER NOT NULL, FOREIGN KEY(`spin_id`) REFERENCES `Spin`(`spin_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wager_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `spin_id` INTEGER NOT NULL, `color` INTEGER, `value` TEXT, `row` INTEGER NOT NULL, `amount` INTEGER NOT NULL, FOREIGN KEY(`spin_id`) REFERENCES `Spin`(`spin_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -76,9 +76,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "number",
-            "columnName": "number",
-            "affinity": "INTEGER",
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -128,7 +128,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '546524f24586cb22b4cbf35ca6353c41')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eda9b42fd388b614c7bd96514cd8026f')"
     ]
   }
 }

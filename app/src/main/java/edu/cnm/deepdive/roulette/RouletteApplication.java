@@ -18,5 +18,4 @@ public class RouletteApplication extends Application {
         .subscribeOn(Schedulers.io())
         .subscribe();
   }
-
 }
