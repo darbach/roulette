@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:padding="@dimen/half_static_spacing">
+
+  <TextView
+    android:id="@+id/pocket"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_static_spacing"
+    android:layout_weight="1"
+    android:textAlignment="center"
+    style="@style/TextAppearance.AppCompat.Medium"
+    tools:text="00"/>
+
+  <TextView
+    android:id="@+id/count"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_static_spacing"
+    android:layout_weight="1"
+    android:textAlignment="center"
+    style="@style/TextAppearance.AppCompat.Medium"
+    tools:text="25"/>
+
+  <TextView
+    android:id="@+id/percent"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_static_spacing"
+    android:layout_weight="1"
+    android:textAlignment="center"
+    style="@style/TextAppearance.AppCompat.Medium"
+    tools:text="4.5%"/>
+</LinearLayout>

@@ -8,4 +8,8 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="StatisticsHeader" parent="TextAppearance.AppCompat.Medium">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textAlignment">center</item>
+  </style>
 </resources>
