@@ -3,10 +3,12 @@ package edu.cnm.deepdive.roulette.service;
 import android.content.Context;
 import androidx.lifecycle.LiveData;
 import edu.cnm.deepdive.roulette.model.dao.SpinDao;
+import edu.cnm.deepdive.roulette.model.dao.StatisticsDao;
 import edu.cnm.deepdive.roulette.model.dao.WagerDao;
 import edu.cnm.deepdive.roulette.model.entity.Spin;
 import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
+import edu.cnm.deepdive.roulette.model.view.ValueCount;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -18,12 +20,14 @@ public class SpinRepository {
   private final Context context;
   private final SpinDao spinDao;
   private final WagerDao wagerDao;
+  private final StatisticsDao statisticsDao;
 
   public SpinRepository(Context context) {
     this.context = context;
     RouletteDatabase database = RouletteDatabase.getInstance();
     spinDao = database.getSpinDao();
     wagerDao = database.getWagerDao();
+    statisticsDao = database.getStatisticsDao();
   }
 
   public Single<SpinWithWagers> save(SpinWithWagers spin) {
@@ -73,4 +77,10 @@ public class SpinRepository {
   public LiveData<SpinWithWagers> get(long spinId) {
     return spinDao.selectById(spinId);
   }
+
+  public LiveData<List<ValueCount>> getCounts() {
+    return statisticsDao.selectCounts();
+  }
+
+  
 }
