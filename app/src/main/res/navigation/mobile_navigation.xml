@@ -3,23 +3,34 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/mobile_navigation"
-  app:startDestination="@+id/navigation_home">
+  app:startDestination="@+id/navigation_play">
 
   <fragment
-    android:id="@+id/navigation_home"
-    android:label="@string/title_home"
-    android:name="edu.cnm.deepdive.roulette.controller.HomeFragment"
-    tools:layout="@layout/fragment_home"/>
+    android:id="@+id/navigation_play"
+    android:label="@string/long_title_play"
+    android:name="edu.cnm.deepdive.roulette.controller.PlayFragment"
+    tools:layout="@layout/fragment_play">
+    <action
+      android:id="@+id/action_navigation_play_to_navigation_wager"
+      app:destination="@id/navigation_wager"
+      app:popUpTo="@id/navigation_play"/>
+  </fragment>
 
   <fragment
     android:id="@+id/navigation_dashboard"
-    android:label="@string/title_dashboard"
+    android:label="@string/long_title_history"
     android:name="edu.cnm.deepdive.roulette.controller.DashboardFragment"
     tools:layout="@layout/fragment_dashboard"/>
 
   <fragment
     android:id="@+id/navigation_notifications"
-    android:label="@string/title_notifications"
+    android:label="@string/long_title_stats"
     android:name="edu.cnm.deepdive.roulette.controller.NotificationsFragment"
     tools:layout="@layout/fragment_notifications"/>
+
+  <fragment
+    android:id="@+id/navigation_wager"
+    android:name="edu.cnm.deepdive.roulette.controller.WagerFragment"
+    android:label="@string/long_title_wager"
+    tools:layout="@layout/fragment_wager"/>
 </navigation>

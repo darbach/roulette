@@ -1,9 +1,14 @@
 <resources>
   <string name="app_name">Roulette</string>
-  <string name="title_home">Home</string>
-  <string name="title_dashboard">Dashboard</string>
-  <string name="title_notifications">Notifications</string>
+  <string name="title_play">Play</string>
+  <string name="title_history">History</string>
+  <string name="title_stats">Stats</string>
+  <string name="long_title_play">Roulette: Play</string>
+  <string name="long_title_history">Roulette: History</string>
+  <string name="long_title_stats">Roulette: Stats</string>
   <string name="spin_button">Spin!</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="long_title_wager">Roulette: Wager</string>
   <string-array name="pocket_values">
     <item>00</item>
     <item>27</item>
