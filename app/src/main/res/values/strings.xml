@@ -12,6 +12,7 @@
   <string name="pocket_header">Pocket</string>
   <string name="count_header">Count</string>
   <string name="percent_header">% of Total</string>
+  <string name="sign_in_failure">Unable to sign in with provided credentials.</string>
   <string-array name="pocket_values">
     <item>00</item>
     <item>27</item>
