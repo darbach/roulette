@@ -67,6 +67,12 @@ public class PlayFragment extends Fragment {
     });
   }
 
+  @Override
+  public void onStop() {
+    binding.rouletteWheel.clearAnimation(); // Stop the animation due to Back Arrow clicked.
+    super.onStop();
+  }
+
   private void spinWheel() {
     if (!spinning) {
       spinning = true;
