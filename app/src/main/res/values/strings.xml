@@ -19,6 +19,12 @@
   <string name="minimum_wager_key">minimum_wager_key</string>
   <string name="minimum_wager_title">Minimum wager</string>
   <string name="minimum_wager_summary">Wager set or added when clicking on a spot in the wager screen.</string>
+  <string name="starting_pot_key">starting_pot_key</string>
+  <string name="starting_pot_title">Starting pot</string>
+  <string name="starting_pot_summary">Number of chips available at the start of a game.</string>
+  <string name="wager_riding_key">wager_riding_key</string>
+  <string name="wager_riding_title">Let it ride!</string>
+  <string name="wager_riding_summary">Control whether winning wagers and payout remains on the table for the next spin.</string>
   <string-array name="pocket_values">
     <item>00</item>
     <item>27</item>

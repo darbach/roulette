@@ -4,4 +4,9 @@
   <integer name="minimum_wager_max">10</integer>
   <integer name="minimum_wager_default">1</integer>
   <integer name="minimum_wager_increment">1</integer>
+
+  <integer name="starting_pot_min">25</integer>
+  <integer name="starting_pot_max">500</integer>
+  <integer name="starting_pot_default">25</integer>
+  <integer name="starting_pot_increment">25</integer>
 </resources>

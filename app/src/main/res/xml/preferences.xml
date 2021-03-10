@@ -5,12 +5,28 @@
 
   <SeekBarPreference
     android:key="@string/minimum_wager_key"
+    android:title="@string/minimum_wager_title"
+    android:summary="@string/minimum_wager_summary"
     app:min="@integer/minimum_wager_min"
     android:max="@integer/minimum_wager_max"
     android:defaultValue="@integer/minimum_wager_default"
     app:seekBarIncrement="@integer/minimum_wager_increment"
-    app:showSeekBarValue="true"
-    android:title="@string/minimum_wager_title"
-    android:summary="@string/minimum_wager_summary"/>
+    app:showSeekBarValue="true"/>
+
+  <SeekBarPreference
+    android:key="@string/starting_pot_key"
+    android:title="@string/starting_pot_title"
+    android:summary="@string/starting_pot_summary"
+    app:min="@integer/minimum_wager_min"
+    android:max="@integer/minimum_wager_max"
+    app:seekBarIncrement="@integer/minimum_wager_increment"
+    android:defaultValue="@integer/minimum_wager_default"
+    app:showSeekBarValue="true"/>
+
+  <SwitchPreference
+    android:key="@string/wager_riding_key"
+    android:title="@string/wager_riding_title"
+    android:summary="@string/wager_riding_summary"
+    android:defaultValue = "@bool/wager_riding_default"/>
 
 </PreferenceScreen>
