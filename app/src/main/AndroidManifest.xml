@@ -3,7 +3,6 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="edu.cnm.deepdive.roulette">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
   <application
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
@@ -13,8 +12,9 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="AllowBackup">
-    <activity
-      android:name=".controller.LoginActivity">
+    <activity android:name=".controller.SettingsFragment">
+    </activity>
+    <activity android:name=".controller.LoginActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -26,5 +26,7 @@
       android:name=".controller.MainActivity">
     </activity>
   </application>
+
+  <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

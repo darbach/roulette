@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <SeekBarPreference
+    android:key="minimum_wager_key"
+    app:min="1"
+    android:max="10"
+    android:defaultValue="1"
+    app:seekBarIncrement="1"
+    app:showSeekBarValue="true"
+    android:title="Minimum wager"
+    android:summary="Wager set or added when clicking on a spot in the wager screen."/>
+
+</PreferenceScreen>
