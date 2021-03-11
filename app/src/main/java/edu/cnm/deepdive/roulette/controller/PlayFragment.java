@@ -2,6 +2,9 @@ package edu.cnm.deepdive.roulette.controller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -28,7 +31,6 @@ public class PlayFragment extends Fragment {
   public static final int MAX_FULL_ROTATIONS = 6;
   public static final int MIN_FULL_ROTATIONS = 3;
 
-
   private PlayViewModel playViewModel;
   private FragmentPlayBinding binding;
   private boolean spinning;
@@ -38,8 +40,10 @@ public class PlayFragment extends Fragment {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     this.rng = new SecureRandom();
+    setHasOptionsMenu(true);
   }
 
+  @Override
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentPlayBinding.inflate(inflater, container, false);
@@ -74,6 +78,27 @@ public class PlayFragment extends Fragment {
   public void onStop() {
     binding.rouletteWheel.clearAnimation(); // Stop the animation due to Back Arrow clicked.
     super.onStop();
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.play_options, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    boolean handled = true;
+    //noinspection SwitchStatementWithTooFewBranches
+    switch (item.getItemId()) {
+      case R.id.new_game:
+        playViewModel.newGame();
+        break;
+      default:
+        handled = super.onOptionsItemSelected(item);
+        break;
+    }
+    return handled;
   }
 
   private void spinWheel() {
