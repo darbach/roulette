@@ -7,6 +7,7 @@
     android:key="@string/minimum_wager_key"
     android:title="@string/minimum_wager_title"
     android:summary="@string/minimum_wager_summary"
+    android:icon="@drawable/ic_wager"
     app:min="@integer/minimum_wager_min"
     android:max="@integer/minimum_wager_max"
     android:defaultValue="@integer/minimum_wager_default"
@@ -17,16 +18,18 @@
     android:key="@string/starting_pot_key"
     android:title="@string/starting_pot_title"
     android:summary="@string/starting_pot_summary"
-    app:min="@integer/minimum_wager_min"
-    android:max="@integer/minimum_wager_max"
-    app:seekBarIncrement="@integer/minimum_wager_increment"
-    android:defaultValue="@integer/minimum_wager_default"
+    android:icon="@drawable/ic_starting_pot"
+    app:min="@integer/starting_pot_min"
+    android:max="@integer/starting_pot_max"
+    app:seekBarIncrement="@integer/starting_pot_increment"
+    android:defaultValue="@integer/starting_pot_default"
     app:showSeekBarValue="true"/>
 
   <SwitchPreference
     android:key="@string/wager_riding_key"
     android:title="@string/wager_riding_title"
     android:summary="@string/wager_riding_summary"
+    android:icon="@drawable/ic_wager_riding"
     android:defaultValue = "@bool/wager_riding_default"/>
 
 </PreferenceScreen>
