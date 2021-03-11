@@ -47,7 +47,7 @@ public class PlayFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentPlayBinding.inflate(inflater, container, false);
-    binding.spinWheel.setOnClickListener((v) -> spinWheel());
+    binding.rouletteWheel.setOnClickListener((v) -> spinWheel());
     binding.placeWager.setOnClickListener((v) -> {
       Navigation.findNavController(binding.getRoot()).navigate(PlayFragmentDirections.actionNavigationPlayToNavigationWager());
     });
@@ -104,7 +104,7 @@ public class PlayFragment extends Fragment {
   private void spinWheel() {
     if (!spinning) {
       spinning = true;
-      binding.spinWheel.setEnabled(false);
+      binding.rouletteWheel.setEnabled(false);
       binding.rouletteValue.setVisibility(View.INVISIBLE);
       playViewModel.spinWheel();
     }
@@ -152,7 +152,7 @@ public class PlayFragment extends Fragment {
     public void onAnimationEnd(Animation animation) {
       binding.rouletteWheel.setRotation(this.finalRotation);
       spinning = false;
-      binding.spinWheel.setEnabled(true); //turn the button back on
+      binding.rouletteWheel.setEnabled(true); //turn the button back on
       binding.rouletteValue.setVisibility(View.VISIBLE); //show the roulette value
     }
 

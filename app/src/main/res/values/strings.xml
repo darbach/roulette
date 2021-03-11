@@ -27,7 +27,7 @@
   <string name="wager_riding_summary">Control whether winning wagers and payout remains on the table for the next spin.</string>
   <string name="current_pot_format">$%,d</string>
   <string name="new_game">New game</string>
-
+  <string name="roulette_wheel_description">Roulette wheel - click to spin</string>
   <string-array name="pocket_values">
     <item>00</item>
     <item>27</item>
