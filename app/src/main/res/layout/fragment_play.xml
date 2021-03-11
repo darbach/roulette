@@ -53,6 +53,18 @@
     app:layout_constraintTop_toTopOf="@id/place_wager"
     app:layout_constraintBottom_toBottomOf="@id/place_wager"/>
 
+  <TextView
+    android:id="@+id/current_pot_value"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/CurrentPotValue"
+    app:layout_constraintStart_toStartOf="@id/current_pot_image"
+    app:layout_constraintEnd_toEndOf="@id/current_pot_image"
+    app:layout_constraintTop_toTopOf="@id/current_pot_image"
+    app:layout_constraintBottom_toBottomOf="@id/current_pot_image"
+    android:text="1,000"/>
+
+
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/place_wager"
     android:layout_width="wrap_content"

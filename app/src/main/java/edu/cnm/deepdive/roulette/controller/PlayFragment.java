@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.databinding.FragmentPlayBinding;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
 import java.security.SecureRandom;
@@ -65,6 +66,8 @@ public class PlayFragment extends Fragment {
             BaseTransientBottomBar.LENGTH_INDEFINITE).show();
       }
     });
+    playViewModel.getCurrentPot().observe(getViewLifecycleOwner(),
+        (pot) -> binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
   }
 
   @Override

@@ -12,4 +12,13 @@
     <item name="android:textStyle">bold</item>
     <item name="android:textAlignment">center</item>
   </style>
+
+  <style name="CurrentPotValue" parent="TextAppearance.AppCompat.Medium.Inverse">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">#FFFFFFFF</item>
+    <item name="android:shadowColor">#FF000000</item>
+    <item name="android:shadowDx">5</item>
+    <item name="android:shadowDy">5</item>
+    <item name="android:shadowRadius">2</item>
+  </style>
 </resources>
