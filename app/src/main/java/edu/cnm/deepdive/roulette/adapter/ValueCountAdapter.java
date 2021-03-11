@@ -27,7 +27,8 @@ public class ValueCountAdapter extends ArrayAdapter<ValueCount> {
     ValueCount item = getItem(position);
     binding.pocket.setText(item.getValue());
     binding.count.setText(String.valueOf(item.getCount()));
-    // TODO Set percent text.
+    binding.percent.setText(
+        getContext().getString(R.string.value_percent_format, item.getPercent()));
     return binding.getRoot();
   }
 }
