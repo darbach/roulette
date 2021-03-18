@@ -21,7 +21,7 @@ public class WagerWithSpin extends Wager {
   }
 
   @Override
-  public void setSpin(Spin spin) {
+  public void setSpin(@NonNull Spin spin) {
     this.spin = spin;
   }
 }
