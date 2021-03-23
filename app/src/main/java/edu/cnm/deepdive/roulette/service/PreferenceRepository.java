@@ -13,6 +13,7 @@ public class PreferenceRepository {
   private final Context context;
   private final SharedPreferences preferences;
   private final Resources resources;
+  private OnSharedPreferenceChangeListener listener;
 
   public PreferenceRepository(Context context) {
     this.context = context;
@@ -37,9 +38,9 @@ public class PreferenceRepository {
 
   public Observable<Integer> maximumWager() {
     return Observable.create((emitter) -> {
-      OnSharedPreferenceChangeListener listener = (prefs, key) -> {
+      listener = (prefs, key) -> {
         if (key.equals(resources.getString(R.string.maximum_wager_key))) {
-          emitter.onNext(prefs.getInt(key, resources.getInteger(R.string.maximum_wager_key)));
+          emitter.onNext(prefs.getInt(key, resources.getInteger(R.integer.maximum_wager_default)));
         }
       };
       preferences.registerOnSharedPreferenceChangeListener(listener);

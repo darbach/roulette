@@ -1,15 +1,14 @@
 package edu.cnm.deepdive.roulette.controller;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
@@ -18,6 +17,7 @@ import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter;
 import edu.cnm.deepdive.roulette.databinding.FragmentWagerBinding;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WagerFragment extends Fragment {
@@ -25,9 +25,13 @@ public class WagerFragment extends Fragment {
   public static final int FULL_WIDTH = 6;
   public static final int ZERO_SPACE_WIDTH = 3;
   public static final int NORMAL_SPACE_WIDTH = 2;
+
+  private final Map<String, Integer> wagers = new HashMap<>();
+
   private FragmentWagerBinding binding;
   private PlayViewModel viewModel;
   private WagerSpaceAdapter adapter;
+
 
   @Override
   public View onCreateView(
@@ -40,12 +44,7 @@ public class WagerFragment extends Fragment {
     adapter = new WagerSpaceAdapter(
         getContext(),
         (view, position, value) -> viewModel.incrementWager(value),
-        (view, position, value) -> { //long press
-          PopupMenu menu = new PopupMenu(getContext(), view);
-          MenuInflater menuInflater = menu.getMenuInflater();
-          menuInflater.inflate(R.menu.wager_actions, menu.getMenu());
-          menu.show();
-        }
+        (view, position, value) -> showWagerActions(view, value) //long press
     );
     binding.wagerSpaces.setAdapter(//set WagerAdapter for RecyclerView
         adapter);
@@ -56,18 +55,39 @@ public class WagerFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);//attach to viewModel
-    viewModel.getWagers().observe(getViewLifecycleOwner(), (wagers) -> {
-      Map<String, Integer> oldWagers = adapter.getWagers();
-      oldWagers.clear();
-      oldWagers.putAll(wagers);
+    viewModel.getWagers().observe(getViewLifecycleOwner(), (updatedWagers) -> {
+      Map<String, Integer> currentWagers = adapter.getWagers();
+      currentWagers.clear();
+      currentWagers.putAll(updatedWagers);
       adapter.notifyDataSetChanged();
+      this.wagers.clear();
+      this.wagers.putAll(updatedWagers);
     });
-    viewModel.getMaxWager().observe(getViewLifecycleOwner(),(maxWager) -> {
+    viewModel.getMaxWager().observe(getViewLifecycleOwner(), (maxWager) -> {
       adapter.setMaxWager(maxWager);
       adapter.notifyDataSetChanged();
     });
     // TODO Observe viewModel as appropriate.
   }
+
+  private void showWagerActions(View view, String key) {
+    PopupMenu menu = new PopupMenu(getContext(), view);
+    MenuInflater menuInflater = menu.getMenuInflater();
+    menuInflater.inflate(R.menu.wager_actions, menu.getMenu());
+    menu
+        .getMenu()
+        .findItem(R.id.amount)
+        .setTitle(getString(R.string.current_wager_format, wagers.getOrDefault(key, 0)));
+    menu
+        .getMenu()
+        .findItem(R.id.clear)
+        .setOnMenuItemClickListener((item) -> {
+          viewModel.clearWager(key);
+          return true;
+        });
+    menu.show();
+  }
+
 
   private static class WagerSpanLookup extends SpanSizeLookup {
 

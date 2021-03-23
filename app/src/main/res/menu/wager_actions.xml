@@ -3,7 +3,8 @@
 
   <item
     android:id="@+id/amount"
-    android:title="Amount placeholder"/>
+    android:title="Amount placeholder"
+    android:enabled="false"/>
 
   <item
     android:id="@+id/clear"

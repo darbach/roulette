@@ -33,6 +33,7 @@
   <string name="new_game">New game</string>
   <string name="roulette_wheel_description">Roulette wheel - click to spin</string>
   <string name="value_percent_format">%.2f</string>
+  <string name="current_wager_format">Current wager: $%d</string>
 
   <!--Order of numbers on the wheel-->
   <string-array name="pocket_values">

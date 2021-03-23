@@ -4,12 +4,11 @@ import android.app.Application;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
-import androidx.lifecycle.Lifecycle.Event;
-import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
 import edu.cnm.deepdive.roulette.service.PreferenceRepository;
@@ -49,7 +48,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     preferenceRepository = new PreferenceRepository(application);
     maxWager = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();
-    getNewMaximumWager();
+    observeMaxWager();
     newGame();
   }
 
@@ -100,25 +99,51 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     rouletteValue.setValue(pocketValues[0]);
   }
 
+  @SuppressWarnings("ConstantConditions")
   public void incrementWager(String spaceValue) {
-    // TODO Decide what to do about min/max increment of wager
     Map<String, Integer> wagers = this.wagers.getValue();
-    //noinspection ConstantConditions
-    wagers.put(spaceValue, 1 + wagers.getOrDefault(spaceValue, 0));
-    this.wagers.setValue(wagers);
+    int currentWager = wagers.getOrDefault(spaceValue, 0);
+    if (currentWager < maxWager.getValue()) {
+      wagers.put(spaceValue, 1 + wagers.getOrDefault(spaceValue, 0));
+      this.wagers.setValue(wagers);
+      currentPot.setValue(currentPot.getValue() - 1);
+    }
   }
 
+  @SuppressWarnings("ConstantConditions")
   public void clearWager(String spaceValue) {
     Map<String, Integer> wagers = this.wagers.getValue();
-    //noinspection ConstantConditions
-    wagers.put(spaceValue, 0);
-    this.wagers.setValue(wagers);
+    int currentWager = wagers.getOrDefault(spaceValue, 0);
+    if (currentWager > 0) {
+      wagers.remove(spaceValue);
+      this.wagers.setValue(wagers);
+      currentPot.setValue(currentWager + currentPot.getValue());
+    }
   }
 
-  private void getNewMaximumWager() {
+  private void observeMaxWager() {
+    //noinspection ResultOfMethodCallIgnored
     preferenceRepository
         .maximumWager()
-        .subscribe(this.maxWager::postValue);
+        .subscribe(this::adjustMaxWager);
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  private void adjustMaxWager(int maxWager) {
+    Map<String, Integer> wagers = this.wagers.getValue();
+    int excess = 0;
+    for (String key : wagers.keySet()) {
+      int wager = wagers.get(key);
+      if (wagers.get(key) > maxWager) {
+        excess += wager - maxWager;
+        wagers.put(key, maxWager);
+      }
+    }
+    if (excess > 0) {
+      this.wagers.postValue(wagers);
+      currentPot.setValue(currentPot.getValue() + excess);
+    }
+    this.maxWager.postValue(maxWager);
   }
 
   private void handleThrowable(Throwable throwable) {
