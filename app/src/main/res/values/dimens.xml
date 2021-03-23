@@ -6,4 +6,5 @@
   <dimen name="half_dynamic_spacing">8dp</dimen>
   <dimen name="spin_number">32sp</dimen>
   <dimen name="static_underscore_spacing">8dp</dimen>
+  <dimen name="wager_space_half_margin">2dp</dimen>
 </resources>

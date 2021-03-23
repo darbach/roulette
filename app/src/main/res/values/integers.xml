@@ -9,4 +9,51 @@
   <integer name="starting_pot_max">500</integer>
   <integer name="starting_pot_default">25</integer>
   <integer name="starting_pot_increment">25</integer>
+
+  <integer-array name="space_colors">
+    <!--0 and 00-->
+    <item>@color/greenSpace</item>
+    <item>@color/greenSpace</item>
+    <!--1 thru 10-->
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <!--11 thru 18-->
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <!--19 thru 28-->
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <!--29 thru 36-->
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+
+  </integer-array>
 </resources>
