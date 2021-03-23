@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter.Holder;
 import edu.cnm.deepdive.roulette.databinding.ItemWagerSpaceBinding;
+import edu.cnm.deepdive.roulette.service.PreferenceRepository;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder>{
 
@@ -18,6 +21,8 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder>{
   private final OnLongClickListener onLongClickListener;
   private final int[] spaceColors;
   private final String[] spaceValues;
+  private final Map<String, Integer> wagers;
+  private int maxWager = 100;
 
   public WagerSpaceAdapter(
       Context context, OnClickListener onClickListener, OnLongClickListener onLongClickListener) {
@@ -27,6 +32,7 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder>{
     Resources res = context.getResources();
     spaceColors = res.getIntArray(R.array.space_colors);
     spaceValues = res.getStringArray(R.array.space_values);
+    wagers = new HashMap<>();
   }
 
   @NonNull
@@ -47,6 +53,18 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder>{
     return spaceValues.length;
   }
 
+  public Map<String, Integer> getWagers() {
+    return wagers;
+  }
+
+  public int getMaxWager() {
+    return maxWager;
+  }
+
+  public void setMaxWager(int maxWager) {
+    this.maxWager = maxWager;
+  }
+
   class Holder extends RecyclerView.ViewHolder {
 
     private final ItemWagerSpaceBinding binding;
@@ -59,6 +77,9 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder>{
     private void bind(int position) {
       itemView.setBackgroundColor(spaceColors[position]);//itemView field from super constructor
       binding.value.setText(spaceValues[position]);
+      binding.wager.setMax(maxWager);
+      //noinspection ConstantConditions
+      binding.wager.setProgress(wagers.getOrDefault(spaceValues[position], 0));
       itemView.setOnClickListener((v) ->
           onClickListener.onClick(v, position, spaceValues[position]));
       itemView.setOnLongClickListener((v) -> {

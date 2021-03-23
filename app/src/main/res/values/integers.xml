@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <integer name="minimum_wager_min">1</integer>
-  <integer name="minimum_wager_max">10</integer>
-  <integer name="minimum_wager_default">1</integer>
-  <integer name="minimum_wager_increment">1</integer>
+  <integer name="maximum_wager_min">1</integer>
+  <integer name="maximum_wager_max">10</integer>
+  <integer name="maximum_wager_default">1</integer>
+  <integer name="maximum_wager_increment">1</integer>
 
   <integer name="starting_pot_min">25</integer>
   <integer name="starting_pot_max">500</integer>
@@ -54,6 +54,9 @@
     <item>@color/redSpace</item>
     <item>@color/blackSpace</item>
     <item>@color/redSpace</item>
-
+    <!--All black/red/green bet-->
+    <item>@color/blackSpace</item>
+    <item>@color/redSpace</item>
+    <item>@color/greenSpace</item>
   </integer-array>
 </resources>

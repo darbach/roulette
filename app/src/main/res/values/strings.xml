@@ -16,15 +16,19 @@
   <string name="sign_out">Sign out</string>
   <string name="settings">Settings</string>
   <string name="long_title_settings">Roulette: Settings</string>
-  <string name="minimum_wager_key">minimum_wager_key</string>
-  <string name="minimum_wager_title">Minimum wager</string>
-  <string name="minimum_wager_summary">Wager set or added when clicking on a spot in the wager screen.</string>
+
+  <string name="maximum_wager_key">maximum_wager_key</string>
+  <string name="maximum_wager_title">Maximum wager</string>
+  <string name="maximum_wager_summary">Maximum wager that can be placed on any number or color on the wheel.</string>
+
   <string name="starting_pot_key">starting_pot_key</string>
   <string name="starting_pot_title">Starting pot</string>
   <string name="starting_pot_summary">Number of chips available at the start of a game.</string>
+
   <string name="wager_riding_key">wager_riding_key</string>
   <string name="wager_riding_title">Let it ride!</string>
   <string name="wager_riding_summary">Control whether winning wagers and payout remains on the table for the next spin.</string>
+
   <string name="current_pot_format">$%,d</string>
   <string name="new_game">New game</string>
   <string name="roulette_wheel_description">Roulette wheel - click to spin</string>
@@ -112,6 +116,9 @@
     <item>34</item>
     <item>35</item>
     <item>36</item>
+    <item>Black</item>
+    <item>Red</item>
+    <item>Green</item>
   </string-array>
 
 </resources>
