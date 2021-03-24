@@ -1,0 +1,43 @@
+{
+  "pockets": [
+    {
+      "label": "00",
+      "wheelPosition": 0,
+      "wagerPosition": 1,
+      "wagerSpan": 3,
+      "color": 2,
+      "payout": 36
+    },
+    {
+      "label": "0",
+      "wheelPosition": 18,
+      "wagerPosition": 0,
+      "wagerSpan": 3,
+      "color": 2,
+      "payout": 36
+    }
+  ],
+  "colors": [
+    {
+      "label": "Black",
+      "value": "blackSpace",
+      "wagerPosition": 0,
+      "wagerSpan": 2,
+      "payout": 18
+    },
+    {
+      "label": "Red",
+      "value": "redSpace",
+      "wagerPosition": 0,
+      "wagerSpan": 2,
+      "payout": 18
+    },
+    {
+      "label": "Green",
+      "value": "greenSpace",
+      "wagerPosition": 40,
+      "wagerSpan": 2,
+      "payout": 18
+    }
+  ]
+}
