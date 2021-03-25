@@ -318,14 +318,14 @@
       "resource": "blackSpace",
       "spot": 38,
       "span": 2,
-      "payout": 18
+      "payout": 2
     },
     {
       "name": "Red",
       "resource": "redSpace",
       "spot": 39,
       "span": 2,
-      "payout": 18
+      "payout": 2
     }
   ]
 }

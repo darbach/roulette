@@ -15,12 +15,10 @@ public class WagerWithSpin extends Wager {
   private Spin spin;
 
   @NonNull
-  @Override
   public Spin getSpin() {
     return spin;
   }
 
-  @Override
   public void setSpin(@NonNull Spin spin) {
     this.spin = spin;
   }

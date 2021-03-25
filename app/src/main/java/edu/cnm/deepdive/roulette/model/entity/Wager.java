@@ -30,14 +30,9 @@ public class Wager {
 
   private String value;
 
-  private boolean row; // Betting on "0" and "00" at the same time.
-
   private int amount;
 
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
-  @Ignore
-  private Spin spin;
+  private int payout;
 
   public long getId() {
     return id;
@@ -71,14 +66,6 @@ public class Wager {
     this.value = value;
   }
 
-  public boolean isRow() {
-    return row;
-  }
-
-  public void setRow(boolean row) {
-    this.row = row;
-  }
-
   public int getAmount() {
     return amount;
   }
@@ -87,12 +74,11 @@ public class Wager {
     this.amount = amount;
   }
 
-  @NonNull
-  public Spin getSpin() {
-    return spin;
+  public int getPayout() {
+    return payout;
   }
 
-  public void setSpin(@NonNull Spin spin) {
-    this.spin = spin;
+  public void setPayout(int payout) {
+    this.payout = payout;
   }
 }

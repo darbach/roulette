@@ -10,8 +10,10 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
+import edu.cnm.deepdive.roulette.model.dto.ColorDto;
 import edu.cnm.deepdive.roulette.model.dto.PocketDto;
 import edu.cnm.deepdive.roulette.model.dto.WagerSpot;
+import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
 import edu.cnm.deepdive.roulette.service.ConfigurationRepository;
 import edu.cnm.deepdive.roulette.service.PreferenceRepository;
@@ -91,29 +93,59 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public void spinWheel() {
-    List<PocketDto> pockets = this.pockets.getValue();
-    //noinspection ConstantConditions
-    int selection = rng.nextInt(pockets.size());
-    pocketIndex.setValue(selection);
-    rouletteValue.setValue(pockets.get(selection));
-    SpinWithWagers spin = new SpinWithWagers();
-    spin.setValue(pockets.get(selection).getName()); //set display name on wheel
-    pending.add(
+    SpinWithWagers spin = generateOutcome();
+    pending.add( //store outcome in database
         spinRepository
             .save(spin)
             .subscribe(
-                (spinWithWagers) -> {
-                },
+                this::update, //success
                 this::handleThrowable //method ref has instance or class name left, method right
             )
     );
   }
 
+  @SuppressWarnings("ConstantConditions")
+  private SpinWithWagers generateOutcome() {
+    List<PocketDto> pockets = this.pockets.getValue();
+    int selection = rng.nextInt(pockets.size());
+    PocketDto pocket = pockets.get(selection); //result of the spin
+    ColorDto color = pocket.getColorDto();
+    long currentPot = this.currentPot.getValue();
+    Map<WagerSpot, Integer> wagers = this.wagers.getValue();
+    SpinWithWagers spin = new SpinWithWagers();
+    spin.setValue(pocket.getName()); //set display name of result in UI
+    for (Map.Entry<WagerSpot, Integer> wagerEntry : wagers.entrySet()) {
+      WagerSpot spot = wagerEntry.getKey();
+      int amount = wagerEntry.getValue();
+      if (amount > 0) {
+        int payout = 0;
+        Wager wager = new Wager();
+        wager.setAmount(amount);
+        if (spot instanceof PocketDto) {
+          wager.setValue(spot.getName());
+        } else {
+          wager.setColor(((ColorDto) spot).getColor());
+        }
+        if (spot.equals(pocket) || spot.equals(color)) {
+          payout = amount * spot.getPayout();
+        }
+        wager.setPayout(payout);
+        spin.getWagers().add(wager);
+      }
+    }
+    pocketIndex.setValue(selection);
+    rouletteValue.setValue(pocket);
+    return spin;
+  }
+
+  @SuppressWarnings("ConstantConditions")
   public void newGame() {
-    currentPot.setValue((long) preferenceRepository.getStartingPot());
-    pocketIndex.setValue(0);
-    //noinspection ConstantConditions
+    currentPot.setValue((long) preferenceRepository.getStartingPot());//reset pot
+    pocketIndex.setValue(0); //reset wheel
     rouletteValue.setValue(pockets.getValue().get(0));
+    Map<WagerSpot, Integer> wagers = this.wagers.getValue();//reset wagers
+    wagers.clear();
+    this.wagers.setValue(wagers);
   }
 
   @SuppressWarnings("ConstantConditions")
@@ -136,6 +168,19 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
       this.wagers.setValue(wagers);
       currentPot.setValue(currentWager + currentPot.getValue());
     }
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  private void update(SpinWithWagers spin) {
+    long currentPot = this.currentPot.getValue();
+    for (Wager wager : spin.getWagers()) {
+      currentPot += wager.getPayout();
+    }
+    this.currentPot.postValue(currentPot);
+    // FIXME Doesn't use "Let it ride!"
+    Map<WagerSpot, Integer> wagers = this.wagers.getValue();//reset wagers
+    wagers.clear();
+    this.wagers.postValue(wagers);
   }
 
   @SuppressLint("CheckResult")
