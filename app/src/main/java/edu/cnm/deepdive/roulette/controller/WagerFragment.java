@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
@@ -45,9 +46,10 @@ public class WagerFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);//attach to viewModel
-    viewModel.getWagers().observe(getViewLifecycleOwner(), this::updateWagers);
-    viewModel.getMaxWager().observe(getViewLifecycleOwner(), this::updateMaxWager);
-    viewModel.getWagerSpots().observe(getViewLifecycleOwner(), this::setupAdapter);
+    LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+    viewModel.getWagers().observe(lifecycleOwner, this::updateWagers);
+    viewModel.getMaxWager().observe(lifecycleOwner, this::updateMaxWager);
+    viewModel.getWagerSpots().observe(lifecycleOwner, this::setupAdapter);
     // TODO Observe viewModel as appropriate.
   }
 

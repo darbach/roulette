@@ -13,6 +13,7 @@ import android.view.animation.RotateAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -35,7 +36,7 @@ public class PlayFragment extends Fragment {
   private FragmentPlayBinding binding;
   private boolean spinning;
   private Random rng;
-  private int numPockets;
+  private float numPockets = Float.POSITIVE_INFINITY;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,19 +63,20 @@ public class PlayFragment extends Fragment {
     //noinspection ConstantConditions
     playViewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
     getLifecycle().addObserver(playViewModel);
-    playViewModel.getRouletteValue().observe(getViewLifecycleOwner(),
+    LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+    playViewModel.getRouletteValue().observe(lifecycleOwner,
         (pocket) -> binding.rouletteValue.setText(pocket.getName()));
-    playViewModel.getPocketIndex().observe(getViewLifecycleOwner(), this::rotateToPocket);
-    playViewModel.getThrowable().observe(getViewLifecycleOwner(), (throwable) -> {
+    playViewModel.getPocketIndex().observe(lifecycleOwner, this::rotateToPocket);
+    playViewModel.getThrowable().observe(lifecycleOwner, (throwable) -> {
       if (throwable != null) {
         //noinspection ConstantConditions
         Snackbar.make(getContext(), binding.getRoot(), throwable.getMessage(),
             BaseTransientBottomBar.LENGTH_INDEFINITE).show();
       }
     });
-    playViewModel.getCurrentPot().observe(getViewLifecycleOwner(),
+    playViewModel.getCurrentPot().observe(lifecycleOwner,
         (pot) -> binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
-    playViewModel.getPockets().observe(getViewLifecycleOwner(), //get the number of pockets on wheel
+    playViewModel.getPockets().observe(lifecycleOwner, //get the number of pockets on wheel
         (pockets) -> numPockets = pockets.size());
   }
 
@@ -115,7 +117,7 @@ public class PlayFragment extends Fragment {
   }
 
   private void rotateToPocket(Integer pocketIndex) {
-    float finalRotation = -DEGREES_PER_REVOLUTION * pocketIndex / (float) numPockets;
+    float finalRotation = -DEGREES_PER_REVOLUTION * pocketIndex / numPockets;
     if (spinning) {
       float centerX = binding.rouletteWheel.getWidth() / 2f;
       float centerY = binding.rouletteWheel.getHeight() / 2f;
