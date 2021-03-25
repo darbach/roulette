@@ -14,75 +14,100 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import edu.cnm.deepdive.roulette.R;
-import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter;
+import edu.cnm.deepdive.roulette.adapter.WagerSpotAdapter;
 import edu.cnm.deepdive.roulette.databinding.FragmentWagerBinding;
+import edu.cnm.deepdive.roulette.model.dto.WagerSpot;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WagerFragment extends Fragment {
 
   public static final int FULL_WIDTH = 6;
-  public static final int ZERO_SPACE_WIDTH = 3;
-  public static final int NORMAL_SPACE_WIDTH = 2;
 
-  private final Map<String, Integer> wagers = new HashMap<>();
+  private final Map<WagerSpot, Integer> wagers = new HashMap<>();
 
   private FragmentWagerBinding binding;
   private PlayViewModel viewModel;
-  private WagerSpaceAdapter adapter;
-
+  private WagerSpotAdapter adapter;
+  private int maxWager = 100;
 
   @Override
   public View onCreateView(
       @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentWagerBinding.inflate(inflater, container, false);
-    GridLayoutManager layoutManager = //create a layout manager
-        new GridLayoutManager(getContext(), FULL_WIDTH, LinearLayoutManager.VERTICAL, false);
-    layoutManager.setSpanSizeLookup(new WagerSpanLookup());//attach SpanSizeLookup to layoutmanager
-    binding.wagerSpaces.setLayoutManager(layoutManager);//attach to RecyclerView
-    adapter = new WagerSpaceAdapter(
-        getContext(),
-        (view, position, value) -> viewModel.incrementWager(value),
-        (view, position, value) -> showWagerActions(view, value) //long press
-    );
-    binding.wagerSpaces.setAdapter(//set WagerAdapter for RecyclerView
-        adapter);
     return binding.getRoot();
   }
 
+  @SuppressWarnings("ConstantConditions")
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);//attach to viewModel
-    viewModel.getWagers().observe(getViewLifecycleOwner(), (updatedWagers) -> {
-      Map<String, Integer> currentWagers = adapter.getWagers();
-      currentWagers.clear();
-      currentWagers.putAll(updatedWagers);
-      adapter.notifyDataSetChanged();
-      this.wagers.clear();
-      this.wagers.putAll(updatedWagers);
-    });
-    viewModel.getMaxWager().observe(getViewLifecycleOwner(), (maxWager) -> {
-      adapter.setMaxWager(maxWager);
-      adapter.notifyDataSetChanged();
-    });
+    viewModel.getWagers().observe(getViewLifecycleOwner(), this::updateWagers);
+    viewModel.getMaxWager().observe(getViewLifecycleOwner(), this::updateMaxWager);
+    viewModel.getWagerSpots().observe(getViewLifecycleOwner(), this::setupAdapter);
     // TODO Observe viewModel as appropriate.
   }
 
-  private void showWagerActions(View view, String key) {
+  private void updateMaxWager(Integer maxWager) {
+    this.maxWager = maxWager;
+    if (adapter != null) { //ensure adapter has been set
+      updateAdapterMaxWager();
+    }
+  }
+
+  private void updateAdapterMaxWager() {
+    adapter.setMaxWager(maxWager);
+    adapter.notifyDataSetChanged();
+  }
+
+  private void setupAdapter(List<WagerSpot> spots) {
+    GridLayoutManager layoutManager = //create a layout manager
+        new GridLayoutManager(getContext(), FULL_WIDTH, LinearLayoutManager.VERTICAL, false);
+    layoutManager
+        .setSpanSizeLookup(new WagerSpanLookup(spots));//attach SpanSizeLookup to layoutmanager
+    binding.wagerSpaces.setLayoutManager(layoutManager);//attach to RecyclerView
+    adapter = new WagerSpotAdapter(getContext(), spots,
+        (v, position, value) -> viewModel.incrementWager(value), //tap
+        (v, position, value) -> showWagerActions(v, value) //long press
+    );
+    binding.wagerSpaces.setAdapter(adapter);//set WagerAdapter for RecyclerView
+    this.updateAdapterWagers();
+    this.updateAdapterMaxWager();
+  }
+
+  private void updateWagers(Map<WagerSpot, Integer> updatedWagers) {
+    this.wagers.clear();
+    this.wagers.putAll(updatedWagers);
+    if (adapter != null) { //ensure adapter has been set
+      updateAdapterWagers();
+    }
+
+  }
+
+  private void updateAdapterWagers() {
+    Map<WagerSpot, Integer> currentWagers = adapter.getWagers();
+    currentWagers.clear();
+    currentWagers.putAll(wagers);
+    adapter.notifyDataSetChanged();
+  }
+
+  private void showWagerActions(View view, WagerSpot spot) {
+    //noinspection ConstantConditions
     PopupMenu menu = new PopupMenu(getContext(), view);
     MenuInflater menuInflater = menu.getMenuInflater();
     menuInflater.inflate(R.menu.wager_actions, menu.getMenu());
     menu
         .getMenu()
         .findItem(R.id.amount)
-        .setTitle(getString(R.string.current_wager_format, wagers.getOrDefault(key, 0)));
+        .setTitle(getString(R.string.current_wager_format, wagers.getOrDefault(spot, 0)));
     menu
         .getMenu()
         .findItem(R.id.clear)
         .setOnMenuItemClickListener((item) -> {
-          viewModel.clearWager(key);
+          viewModel.clearWager(spot);
           return true;
         });
     menu.show();
@@ -91,9 +116,15 @@ public class WagerFragment extends Fragment {
 
   private static class WagerSpanLookup extends SpanSizeLookup {
 
+    private final List<WagerSpot> wagerSpots;
+
+    private WagerSpanLookup(List<WagerSpot> wagerSpots) {
+      this.wagerSpots = wagerSpots;
+    }
+
     @Override
     public int getSpanSize(int position) {
-      return (position <= 1) ? ZERO_SPACE_WIDTH : NORMAL_SPACE_WIDTH;
+      return wagerSpots.get(position).getSpan();
     }
   }
 

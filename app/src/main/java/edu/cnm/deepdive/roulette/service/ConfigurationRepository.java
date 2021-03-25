@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.roulette.service;
 
-import android.content.Context;
+import android.app.Application;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 public class ConfigurationRepository {
 
-  private static Context context;
+  private static Application context;
 
   private List<WagerSpot> wagerSpots; //sorted by "spot" on the wager table
   private List<PocketDto> pockets; //sorted by "position" on the roulette wheel
@@ -46,7 +46,7 @@ public class ConfigurationRepository {
     }
   }
 
-  public static void setContext(Context context) {
+  public static void setContext(Application context) {
     ConfigurationRepository.context = context;
   }
 

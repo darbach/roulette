@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.roulette.model.dto;
 
+import androidx.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 
 public class PocketDto implements WagerSpot {
@@ -23,6 +24,10 @@ public class PocketDto implements WagerSpot {
 
   @Expose
   private int payout;
+
+  private boolean hashComputed = false;
+
+  private int hash;
 
   @Override
   public String getName() {
@@ -87,6 +92,27 @@ public class PocketDto implements WagerSpot {
 
   public void setPayout(int payout) {
     this.payout = payout;
+  }
+
+  @Override
+  public int hashCode() {
+    if (!hashComputed) {
+      hash = 37 * name.hashCode() + Integer.hashCode(spot);
+      hashComputed = true;
+    }
+    return hash;
+  }
+
+  @Override
+  public boolean equals(@Nullable Object obj) {
+    boolean equal = false;
+    if (this == obj) {
+      equal = true;
+    } else if (obj instanceof PocketDto) {
+      PocketDto other = (PocketDto) obj;
+      equal = name.equals(other.name) && spot == other.spot;
+    }
+    return equal;
   }
 
 }

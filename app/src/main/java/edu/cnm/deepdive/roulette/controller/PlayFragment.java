@@ -35,6 +35,7 @@ public class PlayFragment extends Fragment {
   private FragmentPlayBinding binding;
   private boolean spinning;
   private Random rng;
+  private int numPockets;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class PlayFragment extends Fragment {
     binding = FragmentPlayBinding.inflate(inflater, container, false);
     binding.rouletteWheel.setOnClickListener((v) -> spinWheel());
     binding.placeWager.setOnClickListener((v) -> {
-      Navigation.findNavController(binding.getRoot()).navigate(PlayFragmentDirections.actionNavigationPlayToNavigationWager());
+      Navigation.findNavController(binding.getRoot())
+          .navigate(PlayFragmentDirections.actionNavigationPlayToNavigationWager());
     });
     return binding.getRoot();
   }
@@ -61,7 +63,7 @@ public class PlayFragment extends Fragment {
     playViewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
     getLifecycle().addObserver(playViewModel);
     playViewModel.getRouletteValue().observe(getViewLifecycleOwner(),
-        (s) -> binding.rouletteValue.setText(s));
+        (pocket) -> binding.rouletteValue.setText(pocket.getName()));
     playViewModel.getPocketIndex().observe(getViewLifecycleOwner(), this::rotateToPocket);
     playViewModel.getThrowable().observe(getViewLifecycleOwner(), (throwable) -> {
       if (throwable != null) {
@@ -72,6 +74,8 @@ public class PlayFragment extends Fragment {
     });
     playViewModel.getCurrentPot().observe(getViewLifecycleOwner(),
         (pot) -> binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
+    playViewModel.getPockets().observe(getViewLifecycleOwner(), //get the number of pockets on wheel
+        (pockets) -> numPockets = pockets.size());
   }
 
   @Override
@@ -111,8 +115,7 @@ public class PlayFragment extends Fragment {
   }
 
   private void rotateToPocket(Integer pocketIndex) {
-    float finalRotation =
-        -DEGREES_PER_REVOLUTION * pocketIndex / (float) PlayViewModel.POCKETS_ON_WHEEL;
+    float finalRotation = -DEGREES_PER_REVOLUTION * pocketIndex / (float) numPockets;
     if (spinning) {
       float centerX = binding.rouletteWheel.getWidth() / 2f;
       float centerY = binding.rouletteWheel.getHeight() / 2f;
