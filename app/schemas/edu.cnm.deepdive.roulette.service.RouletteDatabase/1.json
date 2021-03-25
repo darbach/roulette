@@ -1,0 +1,139 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "97452edddb4578a6e0e083bc14c759e4",
+    "entities": [
+      {
+        "tableName": "Spin",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spin_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `value` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "spin_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spin_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Spin_timestamp",
+            "unique": false,
+            "columnNames": [
+              "timestamp"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Spin_timestamp` ON `${TABLE_NAME}` (`timestamp`)"
+          },
+          {
+            "name": "index_Spin_value",
+            "unique": false,
+            "columnNames": [
+              "value"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Spin_value` ON `${TABLE_NAME}` (`value`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Wager",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wager_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `spin_id` INTEGER NOT NULL, `color` INTEGER, `value` TEXT, `row` INTEGER NOT NULL, `amount` INTEGER NOT NULL, FOREIGN KEY(`spin_id`) REFERENCES `Spin`(`spin_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "wager_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spinId",
+            "columnName": "spin_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "row",
+            "columnName": "row",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "wager_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Wager_spin_id",
+            "unique": false,
+            "columnNames": [
+              "spin_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Wager_spin_id` ON `${TABLE_NAME}` (`spin_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Spin",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "spin_id"
+            ],
+            "referencedColumns": [
+              "spin_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "viewName": "ValueCount",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT value, COUNT(*) AS `count`, (100.0 * COUNT(*) / (SELECT COUNT(*) FROM spin WHERE value IS NOT NULL)) AS `percent` FROM Spin WHERE value IS NOT NULL GROUP BY value ORDER BY CASE value WHEN '00' THEN -1 ELSE CAST(value AS INTEGER) END"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97452edddb4578a6e0e083bc14c759e4')"
+    ]
+  }
+}
