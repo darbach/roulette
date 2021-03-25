@@ -1,42 +1,330 @@
 {
   "pockets": [
     {
-      "label": "00",
-      "wheelPosition": 0,
-      "wagerPosition": 1,
-      "wagerSpan": 3,
-      "color": 2,
+      "name": "00",
+      "position": 0,
+      "spot": 1,
+      "span": 3,
+      "color": "Green",
       "payout": 36
     },
     {
-      "label": "0",
-      "wheelPosition": 18,
-      "wagerPosition": 0,
-      "wagerSpan": 3,
-      "color": 2,
+      "name": "0",
+      "position": 19,
+      "spot": 0,
+      "span": 3,
+      "color": "Green",
+      "payout": 36
+    },
+    {
+      "name": "1",
+      "position": 37,
+      "spot": 2,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "2",
+      "position": 18,
+      "spot": 3,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "3",
+      "position": 33,
+      "spot": 4,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "4",
+      "position": 14,
+      "spot": 5,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "5",
+      "position": 29,
+      "spot": 6,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "6",
+      "position": 10,
+      "spot": 7,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "7",
+      "position": 25,
+      "spot": 8,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "8",
+      "position": 6,
+      "spot": 9,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "9",
+      "position": 21,
+      "spot": 10,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "10",
+      "position": 2,
+      "spot": 11,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "11",
+      "position": 24,
+      "spot": 12,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "12",
+      "position": 5,
+      "spot": 13,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "13",
+      "position": 36,
+      "spot": 14,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "14",
+      "position": 17,
+      "spot": 15,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "15",
+      "position": 32,
+      "spot": 16,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "16",
+      "position": 13,
+      "spot": 17,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "17",
+      "position": 28,
+      "spot": 18,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "18",
+      "position": 9,
+      "spot": 19,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "19",
+      "position": 7,
+      "spot": 20,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "20",
+      "position": 26,
+      "spot": 21,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "21",
+      "position": 11,
+      "spot": 22,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "22",
+      "position": 30,
+      "spot": 23,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "23",
+      "position": 15,
+      "spot": 24,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "24",
+      "position": 34,
+      "spot": 25,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "25",
+      "position": 3,
+      "spot": 26,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "26",
+      "position": 22,
+      "spot": 27,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "27",
+      "position": 1,
+      "spot": 28,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "28",
+      "position": 20,
+      "spot": 29,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "29",
+      "position": 4,
+      "spot": 30,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "30",
+      "position": 23,
+      "spot": 31,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "31",
+      "position": 8,
+      "spot": 32,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "32",
+      "position": 27,
+      "spot": 33,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "33",
+      "position": 12,
+      "spot": 34,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "34",
+      "position": 31,
+      "spot": 35,
+      "span": 2,
+      "color": "Red",
+      "payout": 36
+    },
+    {
+      "name": "35",
+      "position": 16,
+      "spot": 36,
+      "span": 2,
+      "color": "Black",
+      "payout": 36
+    },
+    {
+      "name": "36",
+      "position": 35,
+      "spot": 37,
+      "span": 2,
+      "color": "Red",
       "payout": 36
     }
   ],
   "colors": [
     {
-      "label": "Black",
-      "value": "blackSpace",
-      "wagerPosition": 0,
-      "wagerSpan": 2,
+      "name": "Green",
+      "resource": "greenSpace",
+      "spot": 40,
+      "span": 2,
       "payout": 18
     },
     {
-      "label": "Red",
-      "value": "redSpace",
-      "wagerPosition": 0,
-      "wagerSpan": 2,
+      "name": "Black",
+      "resource": "blackSpace",
+      "spot": 38,
+      "span": 2,
       "payout": 18
     },
     {
-      "label": "Green",
-      "value": "greenSpace",
-      "wagerPosition": 40,
-      "wagerSpan": 2,
+      "name": "Red",
+      "resource": "redSpace",
+      "spot": 39,
+      "span": 2,
       "payout": 18
     }
   ]
