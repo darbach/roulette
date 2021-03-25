@@ -1,9 +1,62 @@
+### IntelliJ/Android Studio ###
+
+# - metadata
+/.idea/
 *.iml
-.gradle
-.idea
-/local.properties
+
+# - temporary files
+/captures/
+
+# - build output
+/out/
+
+
+### Eclipse ###
+
+# - metadata
+/.settings/
+.project
+.classpath
+
+# - build output
+/bin/
+
+
+### Gradle ###
+
+# - temporary files
+/.gradle/
+
+# - local properties
+local.properties
+
+# - build output
+/build/
+
+
+### Maven ###
+
+# - build output
+/target/
+
+
+### Derby ###
+
+# - data directory
+# DON'T FORGET to add database directory to this in Spring Data projects!
+
+# - log file
+derby.log
+
+
+### Floobits ###
+
+# - metadata
+.floo
+.flooignore
+
+
+### OS X ###
+
+# - metadata
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
