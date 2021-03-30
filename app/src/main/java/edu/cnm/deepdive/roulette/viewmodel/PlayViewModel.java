@@ -41,6 +41,9 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   private final ConfigurationRepository configurationRepository;
   private final CompositeDisposable pending;
 
+  private Map<WagerSpot, Integer> pendingWagers; //whatever is going back on the table
+  private long pendingCurrentPot; //whatever is going back in the pot
+
   public PlayViewModel(@NonNull Application application) {
     super(application);
     spinRepository = new SpinRepository(application);
@@ -110,10 +113,13 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     int selection = rng.nextInt(pockets.size());
     PocketDto pocket = pockets.get(selection); //result of the spin
     ColorDto color = pocket.getColorDto();
-    long currentPot = this.currentPot.getValue();
     Map<WagerSpot, Integer> wagers = this.wagers.getValue();
     SpinWithWagers spin = new SpinWithWagers();
     spin.setValue(pocket.getName()); //set display name of result in UI
+    pendingCurrentPot = currentPot.getValue();
+    pendingWagers = new HashMap<>();
+    boolean letItRide = preferenceRepository.isWagerRiding();
+    int maxWager = this.maxWager.getValue();
     for (Map.Entry<WagerSpot, Integer> wagerEntry : wagers.entrySet()) {
       WagerSpot spot = wagerEntry.getKey();
       int amount = wagerEntry.getValue();
@@ -131,6 +137,17 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
         }
         wager.setPayout(payout);
         spin.getWagers().add(wager);
+        if (letItRide) { //update scratch paper calculations
+          if (payout > maxWager) {
+            int difference = payout - maxWager;
+            pendingCurrentPot += difference;
+            pendingWagers.put(spot, maxWager);
+          } else {
+            pendingWagers.put(spot, payout);
+          }
+        } else {
+          pendingCurrentPot += payout;
+        }
       }
     }
     pocketIndex.setValue(selection);
@@ -172,15 +189,8 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
 
   @SuppressWarnings("ConstantConditions")
   private void update(SpinWithWagers spin) {
-    long currentPot = this.currentPot.getValue();
-    for (Wager wager : spin.getWagers()) {
-      currentPot += wager.getPayout();
-    }
-    this.currentPot.postValue(currentPot);
-    // FIXME Doesn't use "Let it ride!"
-    Map<WagerSpot, Integer> wagers = this.wagers.getValue();//reset wagers
-    wagers.clear();
-    this.wagers.postValue(wagers);
+    this.currentPot.postValue(pendingCurrentPot);
+    this.wagers.postValue(pendingWagers);
   }
 
   @SuppressLint("CheckResult")

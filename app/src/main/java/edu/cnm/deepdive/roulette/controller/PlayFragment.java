@@ -111,7 +111,8 @@ public class PlayFragment extends Fragment {
     if (!spinning) {
       spinning = true;
       binding.rouletteWheel.setEnabled(false);
-      binding.rouletteValue.setVisibility(View.INVISIBLE);
+      binding.rouletteValue.setVisibility(View.INVISIBLE); //hide the spin result value, pending animation
+      binding.currentPotValue.setVisibility(View.INVISIBLE); //hide the pot value
       playViewModel.spinWheel();
     }
   }
@@ -159,6 +160,7 @@ public class PlayFragment extends Fragment {
       spinning = false;
       binding.rouletteWheel.setEnabled(true); //turn the button back on
       binding.rouletteValue.setVisibility(View.VISIBLE); //show the roulette value
+      binding.currentPotValue.setVisibility(View.VISIBLE); //show the pot value
     }
 
     @Override
