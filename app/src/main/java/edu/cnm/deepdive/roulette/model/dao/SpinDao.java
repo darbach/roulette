@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 import edu.cnm.deepdive.roulette.model.entity.Spin;
+import edu.cnm.deepdive.roulette.model.pojo.SpinWithPayout;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
 import io.reactivex.Single;
 import java.util.Collection;
@@ -37,4 +38,8 @@ public interface SpinDao {
   @Transaction
   @Query("SELECT * FROM Spin WHERE spin_id = :spinId")
   LiveData<SpinWithWagers> selectById(long spinId);
+
+  @Query("SELECT s.*, t.total_wager, t.total_payout FROM Spin AS s LEFT JOIN (SELECT w.spin_id, SUM(w.amount) as total_wager, SUM(w.payout) as total_payout FROM Wager AS w GROUP BY w.spin_id) AS t ON s.spin_id = t.spin_id ORDER BY s.timestamp DESC")
+  LiveData<List<SpinWithPayout>> selectHistory();
+
 }

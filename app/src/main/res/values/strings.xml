@@ -34,5 +34,7 @@
   <string name="roulette_wheel_description">Roulette wheel - click to spin</string>
   <string name="value_percent_format">%.2f</string>
   <string name="current_wager_format">Current wager: $%d</string>
+  <string name="positive_format">%,d</string>
+  <string name="difference_format">%+,d</string>
 
 </resources>

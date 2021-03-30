@@ -9,7 +9,12 @@
   <color name="colorPrimarySurface">#EFEBE9</color>
   <color name="colorAccent">#FFD700</color>
   <color name="ic_launcher_background">#FFD700</color>
+
   <color name="blackSpace">#A0000000</color>
   <color name="redSpace">#FFA00000</color>
   <color name="greenSpace">#FF4C8C4a</color>
+
+  <color name="netPositive">#1000FF00</color>
+  <color name="netNegative">#10FF0000</color>
+  <color name="netZero">#00000000</color>
 </resources>
