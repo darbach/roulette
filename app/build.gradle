@@ -105,3 +105,53 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 }
+
+task generateApiDoc() {
+    group "reporting"
+    description "Generates all Javadoc."
+}
+//groovy foreach lambda to create Javadoc
+android.applicationVariants.all { variant ->
+    def task = project.tasks.create("generate${variant.name.capitalize()}Javadoc", Javadoc) {
+        title "Roulette (${project.android.defaultConfig.versionName})"
+        group "ApiDoc"
+        description "Generates Javadoc for $variant.name."
+
+        //Concatenate source files
+        source = variant.sourceSets.collect { it.java.sourceFiles }.inject { m, i -> m + i }
+
+        //add a library that will be searched
+        doFirst {
+            classpath = project.files(variant.javaCompileProvider.get().classpath.files,
+                    project.android.getBootClasspath())
+        }
+
+        if (JavaVersion.current().isJava8Compatible()) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+
+        //exclusions
+        exclude '**/R'
+        exclude '**/R.**'
+        exclude '**/R\$**'
+        exclude '**/BuildConfig*'
+
+        //creation directory
+        destinationDir = file("$projectDir/../docs/api")
+
+        options {
+            windowTitle = "Roulette (${project.android.defaultConfig.versionName})"
+            memberLevel = JavadocMemberLevel.PROTECTED
+            linkSource = false  //create links into source code
+            author = false
+            links 'https://docs.oracle.com/javase/8/docs/api/'
+            linksOffline 'https://developer.android.com/reference', "$projectDir/.."
+        }
+
+        failOnError true
+
+    }
+
+    task.dependsOn "assemble${variant.name.capitalize()}"
+    generateApiDoc.dependsOn task
+}
