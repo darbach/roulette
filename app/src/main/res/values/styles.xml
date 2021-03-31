@@ -29,4 +29,8 @@
     <item name="android:textSize">20sp</item>
   </style>
 
+  <style name="HistoryHeader" parent="TextAppearance.AppCompat.Small">
+    <item name="android:textStyle">bold</item>
+  </style>
+
 </resources>

@@ -1,0 +1,11 @@
+edu.cnm.deepdive.roulette
+edu.cnm.deepdive.roulette.adapter
+edu.cnm.deepdive.roulette.controller
+edu.cnm.deepdive.roulette.model.dao
+edu.cnm.deepdive.roulette.model.dto
+edu.cnm.deepdive.roulette.model.entity
+edu.cnm.deepdive.roulette.model.pojo
+edu.cnm.deepdive.roulette.model.type
+edu.cnm.deepdive.roulette.model.view
+edu.cnm.deepdive.roulette.service
+edu.cnm.deepdive.roulette.viewmodel

@@ -37,4 +37,10 @@
   <string name="positive_format">%,d</string>
   <string name="difference_format">%+,d</string>
 
+  <string name="history_header_date">Date</string>
+  <string name="history_header_spin">Spin</string>
+  <string name="history_header_wager">Wager</string>
+  <string name="history_header_payout">Payout</string>
+  <string name="history_header_net">Net</string>
+
 </resources>

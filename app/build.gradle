@@ -122,8 +122,12 @@ android.applicationVariants.all { variant ->
 
         //add a library that will be searched
         doFirst {
-            classpath = project.files(variant.javaCompileProvider.get().classpath.files,
-                    project.android.getBootClasspath())
+            classpath = project.files(
+                    project.file(projectDir).toPath()
+                            .resolve("build/intermediates/javac/${variant.name}/classes"),
+                    variant.javaCompileProvider.get().classpath.files,
+                    project.android.getBootClasspath()
+            )
         }
 
         if (JavaVersion.current().isJava8Compatible()) {
