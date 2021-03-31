@@ -71,7 +71,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$navigationVersion"
 
     // Lifecycle (LiveData & ViewModel)
-    def lifecycleVersion = '2.3.0'
+    def lifecycleVersion = '2.3.1'
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion"
@@ -123,7 +123,8 @@ android.applicationVariants.all { variant ->
         //add a library that will be searched
         doFirst {
             classpath = project.files(
-                    project.file(projectDir).toPath()
+                    file(projectDir)
+                            .toPath()
                             .resolve("build/intermediates/javac/${variant.name}/classes"),
                     variant.javaCompileProvider.get().classpath.files,
                     project.android.getBootClasspath()
@@ -149,6 +150,8 @@ android.applicationVariants.all { variant ->
             linkSource = false  //create links into source code
             author = false
             links 'https://docs.oracle.com/javase/8/docs/api/'
+            links 'http://reactivex.io/RxJava/javadoc/'
+            links 'https://www.javadoc.io/doc/com.google.code.gson/gson/latest/'
             linksOffline 'https://developer.android.com/reference', "$projectDir/.."
         }
 

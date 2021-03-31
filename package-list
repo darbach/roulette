@@ -379,3 +379,7 @@ androidx.webkit
 androidx.work
 androidx.work.testing
 org.chromium.support_lib_boundary.util
+com.google.android.material
+com.google.android.gms.auth.api.signin
+com.google.android.gms.common.api
+com.google.android.gms.tasks
