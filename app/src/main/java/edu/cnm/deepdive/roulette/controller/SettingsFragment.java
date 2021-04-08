@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.roulette.controller;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
