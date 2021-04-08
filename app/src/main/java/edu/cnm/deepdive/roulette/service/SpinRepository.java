@@ -15,6 +15,11 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Implements standard persistence operations on {@link Spin} instances. In some cases, operations
+ * also involve the related {@link Wager} child entity instances. All persistence operations are
+ * performed on non-UI threads.
+ */
 public class SpinRepository {
 
   private final Context context;
@@ -22,6 +27,12 @@ public class SpinRepository {
   private final WagerDao wagerDao;
   private final StatisticsDao statisticsDao;
 
+  /**
+   * Initializes this instance with all supporting references to data-access objects (DAOs) needed
+   * for persistence operations.
+   *
+   * @param context Android context needed for access outside the app's "sandbox".
+   */
   public SpinRepository(Context context) {
     this.context = context;
     RouletteDatabase database = RouletteDatabase.getInstance();
@@ -30,6 +41,13 @@ public class SpinRepository {
     statisticsDao = database.getStatisticsDao();
   }
 
+  /**
+   * Persists a {@link Spin} instance, along with all of its dependent {@link Wager wagers}.
+   * Actually, both of these types are incorporated into the {@code spin} parameter.
+   *
+   * @param spin POJO incorporating a {@link Spin} and related {@link Wager Wagers}.
+   * @return ReactiveX {@link Single Single&lt;SpinWithWagers&gt;} task.
+   */
   public Single<SpinWithWagers> save(SpinWithWagers spin) {
     if (spin.getId() > 0) {
       // Update
